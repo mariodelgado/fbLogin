@@ -188,6 +188,9 @@
         
     } else{
         [alertView show];
+        UIImage *image = [UIImage imageNamed:@"login_button_enabled"];
+        [sender setImage:image forState:UIControlStateNormal];
+        [self.indicatorView stopAnimating];
         
     }
     
