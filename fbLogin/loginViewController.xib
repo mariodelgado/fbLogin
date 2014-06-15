@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment defaultVersion="1808" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="loginViewController">
             <connections>
                 <outlet property="fieldBg" destination="zy2-Jd-M9K" id="LQg-YD-iqB"/>
+                <outlet property="indicatorView" destination="HY2-t2-qcW" id="30N-SW-JyQ"/>
                 <outlet property="loginButton" destination="lYr-xq-nK5" id="Hv7-FC-i4R"/>
                 <outlet property="logoImage" destination="M7F-Sf-BSK" id="6f6-rw-hW7"/>
                 <outlet property="passField" destination="Fa1-pV-BkP" id="M6Y-8k-EMr"/>
@@ -24,13 +25,6 @@
                 <scrollView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mJm-z8-3or">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <button appearanceType="aqua" opaque="NO" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lYr-xq-nK5">
-                            <rect key="frame" x="12" y="294" width="295" height="52"/>
-                            <state key="normal" image="login_button_disabled">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="disabled" image="login_button_disabled"/>
-                        </button>
                         <imageView appearanceType="aqua" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="form_bg" translatesAutoresizingMaskIntoConstraints="NO" id="zy2-Jd-M9K">
                             <rect key="frame" x="12" y="163" width="295" height="128"/>
                         </imageView>
@@ -47,6 +41,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                             <connections>
+                                <action selector="textFieldChanged:" destination="-1" eventType="editingChanged" id="iMY-eX-fOv"/>
                                 <outlet property="delegate" destination="-1" id="su8-QU-813"/>
                             </connections>
                         </textField>
@@ -66,6 +61,20 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lYr-xq-nK5">
+                            <rect key="frame" x="12" y="294" width="295" height="52"/>
+                            <state key="normal" image="login_button_enabled">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="disabled" image="login_button_disabled"/>
+                            <connections>
+                                <action selector="onLogin:" destination="-1" eventType="touchUpInside" id="0Tx-MG-LvD"/>
+                            </connections>
+                        </button>
+                        <activityIndicatorView hidden="YES" autoresizesSubviews="NO" appearanceType="aqua" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="HY2-t2-qcW">
+                            <rect key="frame" x="265" y="310" width="20" height="20"/>
+                            <rect key="contentStretch" x="0.0" y="0.0" width="0.69999999999999973" height="0.69999999999999973"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <gestureRecognizers/>
@@ -81,6 +90,7 @@
     <resources>
         <image name="form_bg" width="295" height="95"/>
         <image name="login_button_disabled" width="293" height="52"/>
+        <image name="login_button_enabled" width="293" height="52"/>
         <image name="logo" width="174" height="43"/>
     </resources>
 </document>

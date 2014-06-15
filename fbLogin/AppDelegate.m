@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "loginViewController.h"
+#import "FeedViewController.h"
 
 @implementation AppDelegate
 

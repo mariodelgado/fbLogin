@@ -8,6 +8,7 @@
 
 #import "loginViewController.h"
 #import "BSKeyboardControls.h"
+#import "FeedViewController.h"
 
 
 
@@ -20,16 +21,17 @@
 @property(readwrite, retain) UIView *inputAccessoryView;
 @property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-
 @property(nonatomic, readonly, getter=isEditing) BOOL editing;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
+
 
 - (void)willShowKeyboard:(NSNotification *)notification;
 - (void)willHideKeyboard:(NSNotification *)notification;
-
-
-
-
+- (IBAction)textFieldChanged:(id)sender;
+- (IBAction)onLogin:(id)sender;
 @end
+
+
 
 @implementation loginViewController
 
@@ -37,7 +39,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willShowKeyboard:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willHideKeyboard:) name:UIKeyboardWillHideNotification object:nil];
@@ -47,12 +48,12 @@
 
 
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-      [self setNeedsStatusBarAppearanceUpdate];
-
+    [self setNeedsStatusBarAppearanceUpdate];
+    [self textFieldChanged:self.passField];
+ 
     
     NSArray *fields = @[ self.userField, self.passField];
     
@@ -61,12 +62,16 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
 
-
-    // Do any additional setup after loading the view from its nib.
 }
+
 
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
+}
+
+- (IBAction)textFieldChanged:(id)sender
+{
+    self.loginButton.enabled = ([self.passField.text length] > 0) ? YES : NO;
 }
 
 
@@ -89,29 +94,18 @@
     if (activeTextField) [activeTextField resignFirstResponder];
 }
 
-
 - (void)textFieldDidBeginEditing:(UITextField *)passField
 {
     [self.keyboardControls setActiveField:passField];
 }
 
-
-
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    
     [self setUserField:nil];
     [self setPassField:nil];
-
     [self setKeyboardControls:nil];
-    
-  
-    
-
 }
-
-
 
 
 - (void)willShowKeyboard:(NSNotification *)notification {
@@ -157,6 +151,50 @@
                      completion:nil];
 
 }
+
+
+
+- (IBAction)onLogin:(id)sender{
+    
+    UIImage *image = [UIImage imageNamed:@"logging_in_button"];
+    [sender setImage:image forState:UIControlStateNormal];
+    [self.indicatorView startAnimating];
+
+    
+    [self performSelector:@selector(login1:) withObject:_loginButton afterDelay:2.0];
+    
+
+    
+
+    
+}
+
+- (void)login1:(id)sender{
+    
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Title" message:@"Username and/or Password is not correct." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    
+    NSString *inputText = self.passField.text;
+    if ([inputText isEqualToString:@"password"]) {
+        
+        
+        UIViewController *vc = [[FeedViewController alloc] init];
+        
+        // vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve; // Fade
+        vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal; // Flip
+        // vc.modalTransitionStyle = UIModalTransitionStylePartialCurl; // Curl
+        
+        [self presentViewController:vc animated:YES completion:nil];
+        
+    } else{
+        [alertView show];
+        
+    }
+    
+}
+
+
+
 
 - (void)didReceiveMemoryWarning
 {
