@@ -1,0 +1,10 @@
+PODS:
+  - BSKeyboardControls (2.2)
+
+DEPENDENCIES:
+  - BSKeyboardControls (~> 2.2)
+
+SPEC CHECKSUMS:
+  BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
+
+COCOAPODS: 0.33.1
