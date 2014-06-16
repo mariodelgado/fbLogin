@@ -9,6 +9,10 @@
 #import "loginViewController.h"
 #import "BSKeyboardControls.h"
 #import "FeedViewController.h"
+#import "moreViewController.h"
+#import "friendsViewController.h"
+#import "messengerViewController.h"
+#import "notificationsViewController.h"
 
 
 
@@ -23,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property(nonatomic, readonly, getter=isEditing) BOOL editing;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
+@property (nonatomic, strong) UITabBarController *tabController;
+
 
 
 - (void)willShowKeyboard:(NSNotification *)notification;
@@ -34,6 +40,7 @@
 
 
 @implementation loginViewController
+@synthesize tabController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -177,14 +184,35 @@
     NSString *inputText = self.passField.text;
     if ([inputText isEqualToString:@"password"]) {
         
-        
-        UIViewController *vc = [[FeedViewController alloc] init];
+
+        // UIViewController *vc = [[FeedViewController alloc] init];
         
         // vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve; // Fade
-        vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal; // Flip
+        tabController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal; // Flip
         // vc.modalTransitionStyle = UIModalTransitionStylePartialCurl; // Curl
         
-        [self presentViewController:vc animated:YES completion:nil];
+        FeedViewController *firstView = [[FeedViewController alloc] initWithNibName:@"FeedViewController" bundle:nil];
+        friendsViewController *secondView = [[friendsViewController alloc] initWithNibName:@"friendsViewController" bundle:nil];
+        messengerViewController *thirdView = [[messengerViewController alloc] initWithNibName:@"messengerViewController" bundle:nil];
+        notificationsViewController *fourthView = [[notificationsViewController alloc] initWithNibName:@"notificationsViewController" bundle:nil];
+        moreViewController *fifthView = [[moreViewController alloc] initWithNibName:@"moreViewController" bundle:nil];
+        
+
+        
+        NSArray *viewControllersArray = [[NSArray alloc] initWithObjects:firstView, secondView, thirdView, fourthView, fifthView, nil];
+        
+        self.tabController = [[UITabBarController alloc] init];
+
+        [self.tabController setViewControllers:viewControllersArray animated:YES];
+        
+        // Disabling the other views
+        [[[[self.tabController tabBar]items]objectAtIndex:1]setEnabled:FALSE];
+        [[[[self.tabController tabBar]items]objectAtIndex:2]setEnabled:FALSE];
+        [[[[self.tabController tabBar]items]objectAtIndex:3]setEnabled:FALSE];
+
+        [self presentViewController:self.tabController animated:YES completion:nil];
+
+      //  [self presentViewController:vc animated:YES completion:nil];
         
     } else{
         [alertView show];

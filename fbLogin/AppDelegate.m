@@ -18,6 +18,9 @@
     loginViewController *vc = [[loginViewController alloc] init];
     self.window.rootViewController = vc;
     
+    
+
+    
     return YES;
 }
 

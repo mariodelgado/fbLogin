@@ -19,6 +19,9 @@
 @end
 
 @implementation FeedViewController
+{
+    UIRefreshControl *refreshControl;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,6 +32,12 @@
     return self;
 }
 
+
+- (UITabBarItem *)tabBarItem
+{
+    return [[UITabBarItem alloc] initWithTitle:@"News Feed" image:[UIImage imageNamed:@"news.png"] tag:0];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -36,14 +45,25 @@
     UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
     //do something like background color, title, etc you self
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_bar.png"] forBarMetrics:UIBarMetricsDefault];
-
     [self.view addSubview:navbar];
-    
     [self performSelector:@selector(loadImage) withObject:nil afterDelay:2];
     
-
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
+    [refreshControl addTarget:self action:@selector(reloadDatas) forControlEvents:UIControlEventValueChanged];
+    [_scrollView addSubview:refreshControl];
 
    }
+
+-(void)reloadDatas
+{
+    //update here...
+    
+    [refreshControl endRefreshing];
+}
+
+
+
 
 - (void)loadImage{
     _imageView.alpha = 0;

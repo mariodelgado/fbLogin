@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fbLogin/FeedViewController.m"
-            timestampString = "424511772.349326"
+            timestampString = "424573444.065772"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "-loadImage"
             landmarkType = "5">
          </BreakpointContent>
