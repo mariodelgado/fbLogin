@@ -10,10 +10,11 @@
 #import "loginViewController.h"
 
 @interface moreViewController ()
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollview; 
 @property (weak, nonatomic) IBOutlet UIImageView *moreView;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) UIActionSheet *actionsheet;
-
+@property(nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
 
 
 - (IBAction)logoutConfirm:(id)sender;
@@ -25,7 +26,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -37,14 +37,13 @@
     [self setNeedsStatusBarAppearanceUpdate];
     
     
+    //Setup Scroll View
+    _scrollview.contentSize = _moreView.frame.size;
+    
     UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 64) ];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_bar_more.png"] forBarMetrics:UIBarMetricsDefault];
     [self.view addSubview:navbar];
-    
-
-
 }
-
 
 - (void)viewDidAppear:(BOOL)animated{
     
@@ -63,14 +62,18 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
+
+
+//Logout
 - (IBAction)logoutConfirm:(id)sender{
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to logout?" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles: nil];
     [actionSheet showInView:self.view];
 }
+
+
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex ==0) {

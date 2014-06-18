@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -8,8 +8,10 @@
             <connections>
                 <outlet property="imageView" destination="dhv-N9-xPm" id="W2k-NL-IPE"/>
                 <outlet property="indicatorView" destination="gCr-lg-01H" id="M2O-Ig-wmr"/>
-                <outlet property="scrollView" destination="kQf-xB-jzZ" id="vMc-xv-2X7"/>
+                <outlet property="scrollView" destination="qv7-B6-1Pq" id="qQB-mV-hkh"/>
                 <outlet property="statusBg" destination="o0F-1e-ZCk" id="mUz-8F-Xve"/>
+                <outlet property="statusView" destination="EZx-WO-zSK" id="nMe-rL-a69"/>
+                <outlet property="textField" destination="Ucg-Rx-gB9" id="rV7-VC-8pg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,23 +20,43 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView autoresizesSubviews="NO" appearanceType="aqua" contentMode="scaleAspectFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kQf-xB-jzZ">
-                    <rect key="frame" x="0.0" y="64" width="320" height="455"/>
-                    <color key="backgroundColor" red="0.78823529410000004" green="0.80000000000000004" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="sectionIndexBackgroundColor" red="0.78823529411764703" green="0.80000000000000004" blue="0.82745098039215681" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="sectionIndexTrackingBackgroundColor" red="0.78823529410000004" green="0.80000000000000004" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
-                    <imageView key="tableHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="center" image="feed-1" id="dhv-N9-xPm">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1499"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </imageView>
-                </tableView>
-                <activityIndicatorView appearanceType="aqua" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gCr-lg-01H">
+                <scrollView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="qv7-B6-1Pq">
+                    <rect key="frame" x="0.0" y="13" width="320" height="506"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="top" image="feed-1" id="dhv-N9-xPm">
+                            <rect key="frame" x="0.0" y="2" width="320" height="1499"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </imageView>
+                    </subviews>
+                </scrollView>
+                <activityIndicatorView appearanceType="aqua" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" id="gCr-lg-01H">
                     <rect key="frame" x="150" y="274" width="20" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </activityIndicatorView>
-                <imageView autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" image="status" translatesAutoresizingMaskIntoConstraints="NO" id="o0F-1e-ZCk">
-                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                <imageView autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="status" id="o0F-1e-ZCk">
+                    <rect key="frame" x="0.0" y="59" width="320" height="44"/>
                 </imageView>
+                <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NNa-hI-1TE">
+                    <rect key="frame" x="16" y="72" width="70" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onStatus:" destination="-1" eventType="touchUpInside" id="5PD-lh-Xdw"/>
+                    </connections>
+                </button>
+                <imageView appearanceType="aqua" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="status-2" id="EZx-WO-zSK">
+                    <rect key="frame" x="0.0" y="-1" width="320" height="353"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <textField appearanceType="aqua" opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="What are you thinking?" minimumFontSize="17" id="Ucg-Rx-gB9">
+                    <rect key="frame" x="73" y="110" width="227" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" red="0.78823529410000004" green="0.80000000000000004" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -45,5 +67,6 @@
     <resources>
         <image name="feed-1" width="320" height="1499"/>
         <image name="status" width="320" height="43"/>
+        <image name="status-2" width="320" height="353"/>
     </resources>
 </document>

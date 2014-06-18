@@ -9,11 +9,16 @@
 #import "FeedViewController.h"
 
 @interface FeedViewController ()
-@property (weak, nonatomic) IBOutlet UITableView *scrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIImageView *statusBg;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
 
+
+@property (weak, nonatomic) IBOutlet UIImageView *statusView;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+
+- (IBAction)onStatus:(id)sender;
 - (void) loadImage;
 
 @end
@@ -41,30 +46,56 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _scrollView.contentSize = _imageView.frame.size;
+
+    
     [self setNeedsStatusBarAppearanceUpdate];
     UINavigationBar *navbar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
-    //do something like background color, title, etc you self
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_bar.png"] forBarMetrics:UIBarMetricsDefault];
     [self.view addSubview:navbar];
     [self performSelector:@selector(loadImage) withObject:nil afterDelay:2];
-    
+
+    //Pull to Refresh
     refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [UIColor grayColor];
-    [refreshControl addTarget:self action:@selector(reloadDatas) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(reloadData1) forControlEvents:UIControlEventValueChanged];
     [_scrollView addSubview:refreshControl];
 
+    //Status
+    _statusView.alpha = 0;
+    _textField.alpha = 0;
+    UITapGestureRecognizer* tapBackground = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
+    [tapBackground setNumberOfTapsRequired:1];
+    [self.view addGestureRecognizer:tapBackground];
+    
+
+    
+    
    }
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
+
+
+//Pull to Refresh
+
+
+-(void) reloadData1 {
+
+ [self performSelector:@selector(reloadDatas) withObject:refreshControl afterDelay:2.0];
+}
 
 -(void)reloadDatas
 {
-    //update here...
     
     [refreshControl endRefreshing];
 }
 
 
 
-
+//Load feed after Delay
 - (void)loadImage{
     _imageView.alpha = 0;
     _imageView.hidden = NO;
@@ -77,18 +108,46 @@
                           }
      ];
     [self.indicatorView stopAnimating];
-    
 
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
-}
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+//Load Status View
+
+- (IBAction)onStatus:(id)sender{
+    [UIView beginAnimations:@"fade in" context:nil];
+    [UIView setAnimationDuration:0.3];
+    _statusView.alpha = 1.0;
+    _textField.alpha = 1.0;
+    [UIView commitAnimations];
+    [[UIApplication sharedApplication].keyWindow addSubview:_statusView];
+    
+        // This does not change the status bar to dark when the status screen loads.
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    [_textField becomeFirstResponder];
+}
+
+
+-(void) dismissKeyboard:(id)sender
+{
+    [UIView beginAnimations:@"fade in" context:nil];
+    [UIView setAnimationDuration:0.3];
+    _statusView.alpha = 0.0;
+    _textField.alpha = 0;
+    [UIView commitAnimations];
+    
+    // This should change the status bar style back to the light style, right?
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    [self.view endEditing:YES];
+}
+
 
 @end
