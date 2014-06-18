@@ -33,6 +33,11 @@ Completed
 - ~~Every other time, display an error message (optional)~~
 
 
+
+
+*Added* 
+- BSKeyboardControls Cocoapod for adding previous/next to keyboard accessory view, just because. 
+
 Screenshot
 ---
 ![My image](https://raw.githubusercontent.com/mariodelgado/fbLogin/master/screenshot.gif)
